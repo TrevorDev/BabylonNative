@@ -84,3 +84,45 @@ receive a response within 24 hours. If for some reason you do not, please follow
 email to ensure we received your original message. Further information, including the
 [MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in
 the [Security TechCenter](https://technet.microsoft.com/en-us/security/default).
+
+
+OpenXR:
+
+Included OpenXR-SDK-VisualStudio(https://github.com/Microsoft/OpenXR-SDK-VisualStudio) project which includes openXR libs/headers and linked them to babylon native
+
+Single thread mode override internal bug: https://github.com/bkaradzic/bgfx/issues/1505#issuecomment-510267229
+Modified bgfx to accept overriding frames with frames from openXR
+
+Got a basic app that clears the screen running
+
+TODO: 
+Make the rendering logic not dependent on reading from headset pose
+Expose js functions corresponding to XR
+provide similar api to webXR: https://immersive-web.github.io/webxr/
+
+Docs I've followed: https://docs.microsoft.com/en-us/windows/mixed-reality/openxr
+XR demo app: https://github.com/Microsoft/OpenXR-SDK-VisualStudio/tree/master/samples/BasicXrApp
+
+
+document and try to replicate the importing of openXR sdk
+fork babylon native/create a branch
+fork bgfx submodule
+
+GUIDE:
+	Install openXR preivew from https://docs.microsoft.com/en-us/windows/mixed-reality/openxr
+	create a new folder (xrBNative)
+	in that folder clone the xr fork of the babylon native
+	follow instructions to build babylon native
+	cd back to xrBNative folder
+	git clone https://github.com/Microsoft/OpenXR-SDK-VisualStudio
+	in the babylon native project right click solution in file explorer -> add -> existing project and choose OpenXR-SDK-VisualStudio\loader\openxr_loader_win32.vcxproj
+	right click the loader and build
+	Add 
+		OpenXR-SDK-VisualStudio\include 
+		and
+		OpenXR-SDK-VisualStudio\samples\XrUtility
+		as include folders to Library project
+	Add 
+		C:\Users\trbaron\workspace\bnativeHandoff\BabylonNative\Build\bin\Debug\Win32\openxr_loader.lib
+		to testProject -> linker -> input -> additional dependencies
+	Copy "C:\Users\trbaron\workspace\bnativeHandoff\BabylonNative\Build\bin\Debug\Win32\openxr_loader.dll" to C:\Users\trbaron\workspace\bnativeHandoff\BabylonNative\Build\TestApp\Debug
